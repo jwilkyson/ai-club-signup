@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kaishan AI Club — Admin</title>
+<style>
+  :root{
+    --navy:#003A4E;--blue:#008FBE;--teal:#67CBDF;--tint:#EAF6FA;
+    --ink:#1B2B33;--muted:#5B7682;--line:#D8E7ED;--white:#FFFFFF;
+    --radius:14px;--shadow:0 12px 34px rgba(0,58,78,.10);
+    --font:"Calibri","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:var(--tint);line-height:1.5;-webkit-font-smoothing:antialiased}
+
+  .topbar{background:var(--navy);color:var(--white);padding:16px 24px;display:flex;align-items:center;gap:12px}
+  .topbar .badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+  .topbar .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+  .topbar h1{font-size:16px;margin:0;font-weight:700}
+  .spacer{flex:1}
+  .lockbtn{display:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);
+    font-family:var(--font);font-size:13px;font-weight:700;padding:7px 13px;border-radius:9px;cursor:pointer}
+  .lockbtn:hover{background:rgba(255,255,255,.2)}
+
+  .wrap{max-width:1080px;margin:34px auto;padding:0 24px}
+
+  /* login */
+  .login{max-width:380px;margin:48px auto;background:var(--white);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:30px}
+  .login h2{margin:0 0 4px;color:var(--navy);font-size:21px}
+  .login p{margin:0 0 20px;color:var(--muted);font-size:14px}
+  label.lab{display:block;font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:6px}
+  input[type=password],input[type=text]{width:100%;font-family:var(--font);font-size:15px;color:var(--ink);
+    padding:11px 13px;border:1.5px solid var(--line);border-radius:11px;transition:border-color .15s,box-shadow .15s}
+  input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,143,190,.16)}
+  .btn{width:100%;margin-top:16px;font-family:var(--font);font-size:15px;font-weight:700;color:var(--white);
+    background:var(--blue);border:0;border-radius:11px;padding:13px;cursor:pointer;transition:background .15s}
+  .btn:hover{background:#0079a1}
+  .btn[disabled]{opacity:.6;cursor:not-allowed}
+  .err{display:none;background:#FDECEA;border:1px solid #F5C2BC;color:#9B2C20;font-size:13.5px;padding:10px 12px;border-radius:10px;margin-bottom:14px}
+
+  /* dashboard */
+  .panel{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px}
+  .stat{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:10px 16px;box-shadow:var(--shadow)}
+  .stat b{font-size:22px;color:var(--navy)}
+  .stat span{font-size:13px;color:var(--muted);margin-left:6px}
+  .grow{flex:1}
+  .search{min-width:180px}
+  .ghost{background:var(--white);border:1.5px solid var(--line);color:var(--navy);font-family:var(--font);
+    font-size:13.5px;font-weight:700;padding:10px 15px;border-radius:11px;cursor:pointer}
+  .ghost:hover{border-color:var(--blue)}
+
+  .tablecard{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:760px}
+  thead th{background:var(--navy);color:var(--white);text-align:left;font-weight:700;font-size:12px;
+    letter-spacing:.04em;text-transform:uppercase;padding:12px 14px;white-space:nowrap}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:nth-child(even){background:#F7FBFD}
+  .name{font-weight:700;color:var(--navy)}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{background:var(--tint);color:var(--navy);font-size:11.5px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .q{color:var(--muted);max-width:260px}
+  .empty{padding:40px;text-align:center;color:var(--muted)}
+  .note{color:var(--muted);font-size:12.5px;margin-top:14px;text-align:center}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span class="badge"><span class="dot"></span> Kaishan AI Club</span>
+    <h1>Signup Admin</h1>
+    <div class="spacer"></div>
+    <button class="lockbtn" id="lockBtn">Lock</button>
+  </div>
+
+  <div class="wrap">
+
+    <!-- LOGIN -->
+    <div class="login" id="login">
+      <h2>Admin access</h2>
+      <p>Enter the club password to view who's signed up.</p>
+      <div class="err" id="err"></div>
+      <label class="lab" for="pw">Password</label>
+      <input id="pw" type="password" placeholder="Club password" autocomplete="off" />
+      <button class="btn" id="loginBtn">View signups</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="panel" id="panel">
+      <div class="toolbar">
+        <div class="stat"><b id="total">0</b><span id="totalLbl">signups</span></div>
+        <input class="search" id="search" type="text" placeholder="Search name, email, team…" />
+        <div class="grow"></div>
+        <button class="ghost" id="refreshBtn">Refresh</button>
+        <button class="ghost" id="csvBtn">Export CSV</button>
+      </div>
+
+      <div class="tablecard">
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Team</th><th>Experience</th>
+                <th>Topics</th><th>Question</th><th>Signed up</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="empty" style="display:none">No signups match your search.</div>
+      </div>
+      <p class="note">Read-only view. To remove an entry, delete the row in Supabase → Table Editor.</p>
+    </div>
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  /* ============================================================
+     SETUP — paste the SAME publishable key you used on the signup
+     page. (Project URL is already filled in.)
+     ============================================================ */
+  const SUPABASE_URL = "https://yrpjphsqhkdfouhqnwca.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_eEla3AF4pyQvClZpwop57g_gBSuvZbQ";
+
+  const $ = id => document.getElementById(id);
+  let db = null, allRows = [], sessionPw = "";
+  try { if (window.supabase) db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch(e){}
+
+  function showErr(msg){ const e=$("err"); e.textContent=msg; e.style.display="block"; }
+
+  async function login(){
+    $("err").style.display="none";
+    const pw = $("pw").value;
+    if(!pw){ showErr("Enter the club password."); return; }
+    if(!db){ showErr("Couldn't reach the database. Check the key in this file."); return; }
+    const btn=$("loginBtn"); btn.disabled=true; btn.textContent="Checking…";
+    try{
+      const { data, error } = await db.rpc("ai_club_list_signups", { p_password: pw });
+      if(error) throw error;
+      sessionPw = pw;
+      allRows = data || [];
+      $("login").style.display="none";
+      $("panel").style.display="block";
+      $("lockBtn").style.display="inline-block";
+      render();
+    }catch(e){
+      showErr("Incorrect password, or the admin function isn't set up yet.");
+    }finally{
+      btn.disabled=false; btn.textContent="View signups";
+    }
+  }
+
+  function esc(s){ return (s==null?"":String(s)).replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c])); }
+
+  function render(){
+    const term = $("search").value.trim().toLowerCase();
+    const rows = allRows.filter(r=>{
+      if(!term) return true;
+      return [r.name,r.email,r.team].some(v=>(v||"").toLowerCase().includes(term));
+    });
+    $("total").textContent = allRows.length;
+    $("totalLbl").textContent = allRows.length===1 ? "signup" : "signups";
+
+    const tb = $("rows"); tb.innerHTML="";
+    $("empty").style.display = rows.length ? "none" : "block";
+    rows.forEach(r=>{
+      const topics = (r.topics||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("");
+      const date = r.created_at ? new Date(r.created_at).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}) : "";
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="name">${esc(r.name)}</td>
+        <td>${esc(r.email)}</td>
+        <td>${esc(r.team)||"—"}</td>
+        <td>${esc(r.experience)||"—"}</td>
+        <td><div class="chips">${topics||"—"}</div></td>
+        <td class="q">${esc(r.question)||"—"}</td>
+        <td>${date}</td>`;
+      tb.appendChild(tr);
+    });
+  }
+
+  function toCSV(){
+    const head = ["Name","Email","Team","Experience","Topics","Question","Signed up"];
+    const lines = [head.join(",")];
+    allRows.forEach(r=>{
+      const cells = [
+        r.name, r.email, r.team||"", r.experience||"",
+        (r.topics||[]).join("; "), r.question||"",
+        r.created_at ? new Date(r.created_at).toISOString().slice(0,10) : ""
+      ].map(v=>{
+        v = (v==null?"":String(v));
+        return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v;
+      });
+      lines.push(cells.join(","));
+    });
+    const blob = new Blob([lines.join("\n")], {type:"text/csv"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "ai-club-signups.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function refresh(){
+    if(!db || !sessionPw) return;
+    const btn=$("refreshBtn"); btn.disabled=true; btn.textContent="…";
+    try{
+      const { data, error } = await db.rpc("ai_club_list_signups", { p_password: sessionPw });
+      if(!error) { allRows = data || []; render(); }
+    }finally{ btn.disabled=false; btn.textContent="Refresh"; }
+  }
+
+  function lock(){
+    sessionPw=""; allRows=[]; $("pw").value="";
+    $("panel").style.display="none";
+    $("lockBtn").style.display="none";
+    $("login").style.display="block";
+  }
+
+  $("loginBtn").addEventListener("click", login);
+  $("pw").addEventListener("keydown", e=>{ if(e.key==="Enter") login(); });
+  $("search").addEventListener("input", render);
+  $("refreshBtn").addEventListener("click", refresh);
+  $("csvBtn").addEventListener("click", toCSV);
+  $("lockBtn").addEventListener("click", lock);
+</script>
+</body>
+</html>
