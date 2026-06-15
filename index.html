@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kaishan AI Club — Sign Up</title>
+<style>
+  :root{
+    --navy:#003A4E;
+    --blue:#008FBE;
+    --teal:#67CBDF;
+    --tint:#EAF6FA;
+    --ink:#1B2B33;
+    --muted:#5B7682;
+    --line:#D8E7ED;
+    --white:#FFFFFF;
+    --radius:16px;
+    --shadow:0 12px 34px rgba(0,58,78,.10);
+    --font:"Calibri","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--font);
+    color:var(--ink);
+    background:var(--tint);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:var(--navy);
+    color:var(--white);
+    padding:54px 24px 96px;
+    text-align:left;
+  }
+  .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
+  .glow{
+    position:absolute;border-radius:50%;filter:blur(8px);z-index:1;opacity:.5;
+    background:radial-gradient(circle at center, var(--blue), transparent 68%);
+  }
+  .glow.a{width:520px;height:520px;top:-220px;right:-160px;animation:drift 18s ease-in-out infinite}
+  .glow.b{width:360px;height:360px;bottom:-200px;left:-120px;background:radial-gradient(circle at center,var(--teal),transparent 70%);opacity:.32;animation:drift 22s ease-in-out infinite reverse}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(26px,22px)}}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:9px;
+    background:rgba(103,203,223,.14);
+    border:1px solid rgba(103,203,223,.35);
+    color:var(--teal);
+    font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    padding:7px 14px;border-radius:999px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(103,203,223,.25)}
+  h1{
+    font-size:clamp(34px,6vw,56px);
+    line-height:1.04;
+    margin:20px 0 12px;
+    font-weight:700;
+    letter-spacing:-.5px;
+  }
+  .lede{font-size:clamp(16px,2.4vw,19px);color:#C9DEE7;max-width:640px;margin:0}
+
+  /* ---------- CARD WRAP ---------- */
+  .wrap{max-width:920px;margin:-58px auto 56px;padding:0 24px;position:relative;z-index:3}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .card h2{font-size:21px;margin:0 0 4px;color:var(--navy)}
+  .card .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+
+  /* ---------- INFO PANEL ---------- */
+  .info h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
+  .rhythm{list-style:none;margin:0;padding:0}
+  .rhythm li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  .rhythm li:last-child{border-bottom:0}
+  .rhythm .t{font-weight:700;color:var(--navy);min-width:104px}
+  .rhythm .d{color:var(--muted)}
+  .countpill{
+    margin-top:18px;display:flex;align-items:center;gap:10px;
+    background:var(--tint);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--navy);
+  }
+  .countpill b{font-size:19px}
+
+  /* ---------- FORM ---------- */
+  label.fld{display:block;margin-bottom:16px}
+  label.fld .lab{display:block;font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:6px}
+  label.fld .opt{font-weight:400;color:var(--muted)}
+  input[type=text],input[type=email],select,textarea{
+    width:100%;font-family:var(--font);font-size:15px;color:var(--ink);
+    padding:11px 13px;border:1.5px solid var(--line);border-radius:11px;background:var(--white);
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea{resize:vertical;min-height:74px}
+  input:focus,select:focus,textarea:focus{
+    outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,143,190,.16);
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font-family:var(--font);font-size:13.5px;cursor:pointer;user-select:none;
+    border:1.5px solid var(--line);background:var(--white);color:var(--navy);
+    padding:8px 13px;border-radius:999px;transition:all .14s;
+  }
+  .chip:hover{border-color:var(--teal)}
+  .chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--white)}
+  .chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg .chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy)}
+
+  .btn{
+    width:100%;margin-top:6px;font-family:var(--font);font-size:16px;font-weight:700;
+    color:var(--white);background:var(--blue);border:0;border-radius:12px;
+    padding:14px;cursor:pointer;transition:background .15s, transform .05s;
+  }
+  .btn:hover{background:#0079a1}
+  .btn:active{transform:translateY(1px)}
+  .btn[disabled]{opacity:.6;cursor:not-allowed}
+
+  .note{font-size:12.5px;color:var(--muted);margin-top:12px;text-align:center}
+  .err{background:#FDECEA;border:1px solid #F5C2BC;color:#9B2C20;font-size:13.5px;padding:10px 12px;border-radius:10px;margin-bottom:14px;display:none}
+  .demo{background:#FFF6E5;border:1px solid #F2D98B;color:#7A5B12;font-size:13px;padding:9px 12px;border-radius:10px;margin-bottom:16px}
+
+  /* ---------- SUCCESS ---------- */
+  .done{display:none;text-align:center;padding:14px 6px}
+  .done .ring{
+    width:66px;height:66px;border-radius:50%;margin:6px auto 14px;
+    background:var(--tint);display:grid;place-items:center;
+  }
+  .done .ring svg{width:34px;height:34px}
+  .done h2{font-size:23px}
+  .done p{color:var(--muted);font-size:15px;margin:6px auto 18px;max-width:340px}
+  .ghost{background:none;border:1.5px solid var(--line);color:var(--navy);font-weight:700;
+    font-family:var(--font);font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer}
+  .ghost:hover{border-color:var(--blue)}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:0 24px 40px}
+  footer b{color:var(--blue)}
+
+  @media(prefers-reduced-motion:reduce){.glow{animation:none}}
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="glow a"></div>
+    <div class="glow b"></div>
+    <div class="hero-inner">
+      <span class="badge"><span class="dot"></span> Kaishan AI Club</span>
+      <h1>Smarter lunch hours.<br>Save your seat.</h1>
+      <p class="lede">A monthly lunch-and-learn where we swap practical AI tips, watch real demos, and figure out what actually saves us time. Bring your lunch and your curiosity.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+
+      <!-- FORM -->
+      <section class="card">
+        <div id="formView">
+          <h2>Count me in</h2>
+          <p class="sub">Takes about 20 seconds. We'll let you know when and where we meet.</p>
+
+          <div id="demoBanner" class="demo">Preview mode — connect Supabase to start collecting real signups (see setup notes).</div>
+          <div id="errBox" class="err"></div>
+
+          <label class="fld">
+            <span class="lab">Name</span>
+            <input id="name" type="text" autocomplete="name" placeholder="First and last name" />
+          </label>
+
+          <label class="fld">
+            <span class="lab">Work email</span>
+            <input id="email" type="email" autocomplete="email" placeholder="you@kaishan.com" />
+          </label>
+
+          <label class="fld">
+            <span class="lab">Team <span class="opt">(optional)</span></span>
+            <select id="team">
+              <option value="">Select your team…</option>
+              <option>Sales</option>
+              <option>Service / Field</option>
+              <option>Engineering</option>
+              <option>Marketing</option>
+              <option>Operations / Admin</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label class="fld">
+            <span class="lab">How much have you used AI? <span class="opt">(optional)</span></span>
+            <div class="seg" id="level">
+              <button type="button" class="chip" data-val="New to it" aria-pressed="false">New to it</button>
+              <button type="button" class="chip" data-val="Dabbled a bit" aria-pressed="false">Dabbled a bit</button>
+              <button type="button" class="chip" data-val="Use it regularly" aria-pressed="false">Use it regularly</button>
+            </div>
+          </label>
+
+          <label class="fld">
+            <span class="lab">Topics you're most curious about <span class="opt">(pick any)</span></span>
+            <div class="chips" id="topics"></div>
+          </label>
+
+          <label class="fld">
+            <span class="lab">A question about AI you'd love answered <span class="opt">(optional)</span></span>
+            <textarea id="question" placeholder="We'll try to tackle it at a meeting."></textarea>
+          </label>
+
+          <button class="btn" id="submitBtn">Save my seat</button>
+          <p class="note">Internal Kaishan club. Your info is only used to organize meetings.</p>
+        </div>
+
+        <!-- SUCCESS -->
+        <div id="doneView" class="done">
+          <div class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#008FBE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h2>You're on the list</h2>
+          <p id="doneMsg">Thanks for signing up. Watch for a calendar invite with the first meeting details.</p>
+          <button class="ghost" id="againBtn">Sign up someone else</button>
+        </div>
+      </section>
+
+      <!-- INFO -->
+      <aside class="card info">
+        <h3>What you're signing up for</h3>
+        <ul class="rhythm">
+          <li><span class="t">Quick wins</span><span class="d">Share a time-saver from your week</span></li>
+          <li><span class="t">AI in the wild</span><span class="d">A fresh tool or news item</span></li>
+          <li><span class="t">Main topic</span><span class="d">A theme tied to our work</span></li>
+          <li><span class="t">Show &amp; tell</span><span class="d">A live demo you can copy</span></li>
+          <li><span class="t">Takeaway</span><span class="d">One thing to try before next time</span></li>
+        </ul>
+        <div class="countpill" id="countPill"><b id="countNum">—</b><span id="countLbl">signups so far</span></div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer><b>Kaishan Compressor USA LLC</b> &nbsp;·&nbsp; AI Club · Loxley, AL</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  /* ============================================================
+     SETUP — paste your anon / publishable key below, then save.
+     (Your Project URL is already filled in.)
+     Key: Project Settings -> API Keys -> publishable / anon key
+     ============================================================ */
+  const SUPABASE_URL = "https://yrpjphsqhkdfouhqnwca.supabase.co";
+  const SUPABASE_ANON_KEY = "Ysb_publishable_eEla3AF4pyQvClZpwop57g_gBSuvZbQ";
+
+  const TOPIC_LIST = [
+    "Writing & email","Summarizing documents","Data & spreadsheets",
+    "Image generation","Automation for non-coders","Brainstorming",
+    "Meeting notes","Distributor & field support","What AI gets wrong"
+  ];
+
+  const configured = !SUPABASE_URL.startsWith("YOUR_") && !SUPABASE_ANON_KEY.startsWith("YOUR_");
+  let db = null;
+  try { if (window.supabase && configured) db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch(e){}
+  if (db) document.getElementById("demoBanner").style.display = "none";
+
+  // build topic chips
+  const topicsBox = document.getElementById("topics");
+  TOPIC_LIST.forEach(t=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",()=>b.setAttribute("aria-pressed", b.getAttribute("aria-pressed")==="true"?"false":"true"));
+    topicsBox.appendChild(b);
+  });
+
+  // single-select experience level
+  document.querySelectorAll("#level .chip").forEach(c=>{
+    c.addEventListener("click",()=>{
+      const on=c.getAttribute("aria-pressed")==="true";
+      document.querySelectorAll("#level .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
+      c.setAttribute("aria-pressed", on?"false":"true");
+    });
+  });
+
+  const $=id=>document.getElementById(id);
+  const pressed=sel=>[...document.querySelectorAll(sel)].filter(c=>c.getAttribute("aria-pressed")==="true");
+
+  async function refreshCount(){
+    if(!db){ $("countNum").textContent="✦"; $("countLbl").textContent="preview mode"; return; }
+    try{
+      const { data, error } = await db.rpc("ai_club_signup_count");
+      if(error) throw error;
+      const n = data ?? 0;
+      $("countNum").textContent = n;
+      $("countLbl").textContent = (n===1?"person":"people")+" signed up";
+    }catch(e){ $("countNum").textContent="—"; $("countLbl").textContent="signups"; }
+  }
+  refreshCount();
+
+  function showError(msg){ const e=$("errBox"); e.textContent=msg; e.style.display="block"; }
+
+  $("submitBtn").addEventListener("click", async ()=>{
+    $("errBox").style.display="none";
+    const name=$("name").value.trim();
+    const email=$("email").value.trim();
+    if(!name){ showError("Please add your name."); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ showError("Please enter a valid email."); return; }
+
+    const record={
+      name, email,
+      team: $("team").value || null,
+      experience: (pressed("#level .chip")[0]?.dataset.val) || null,
+      topics: pressed("#topics .chip").map(c=>c.textContent),
+      question: $("question").value.trim() || null
+    };
+
+    const btn=$("submitBtn"); btn.disabled=true; btn.textContent="Saving…";
+
+    if(db){
+      const { error } = await db.from("ai_club_signups").insert(record);
+      if(error){
+        btn.disabled=false; btn.textContent="Save my seat";
+        showError("Something went wrong saving that. Please try again.");
+        return;
+      }
+    } else {
+      await new Promise(r=>setTimeout(r,500)); // demo pause
+    }
+
+    $("formView").style.display="none";
+    $("doneView").style.display="block";
+    $("doneMsg").textContent = `Thanks, ${name.split(" ")[0]}. Watch for a calendar invite with the first meeting details.`;
+    refreshCount();
+  });
+
+  $("againBtn").addEventListener("click", ()=>{
+    ["name","email","question"].forEach(id=>$(id).value="");
+    $("team").value="";
+    document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    $("doneView").style.display="none";
+    $("formView").style.display="block";
+    $("name").focus();
+  });
+</script>
+</body>
+</html>
